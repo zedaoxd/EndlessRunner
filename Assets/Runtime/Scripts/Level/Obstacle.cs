@@ -31,17 +31,11 @@ public class Obstacle : MonoBehaviour
 
     private ObstacleDecoration FindDecorationForCollider(Collider collider)
     {
-        //TODO: Como os colliders estão todos no root transform, nós precisamos procurar
-        //qual decoration recebeu a colisão baseado na distância do collider
-        //Pensar em uma solução melhor para isso
         float minDistX = Mathf.Infinity;
         ObstacleDecoration minDistDecoration = null;
         foreach (var decoration in decorations)
         {
-            float decorationXDistToCollider =
-            Mathf.Abs(
-                collider.bounds.center.x -
-                decoration.transform.position.x);
+            float decorationXDistToCollider = Mathf.Abs(collider.bounds.center.x - decoration.transform.position.x);
             if (decorationXDistToCollider < minDistX)
             {
                 minDistDecoration = decoration;
