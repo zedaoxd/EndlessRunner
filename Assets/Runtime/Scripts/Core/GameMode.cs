@@ -74,6 +74,9 @@ public class GameMode : MonoBehaviour
 
     public void OnGameOver()
     {
+        player.Die();
+        playerAnimationController.Die();
+
         isGameRunning = false;
         player.ForwardSpeed = 0;
 

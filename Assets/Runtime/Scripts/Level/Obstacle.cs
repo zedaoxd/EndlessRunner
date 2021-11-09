@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+public class Obstacle : MonoBehaviour, ICollisionReact
 {
     [SerializeField] private DecorationSpawner[] decorationSpawners;
 
@@ -43,5 +43,12 @@ public class Obstacle : MonoBehaviour
             }
         }
         return minDistDecoration;
+    }
+
+    public void ReactCollision(in Collider other,in GameMode gameMode)
+    {
+        Obstacle obstacle = other.GetComponent<Obstacle>();
+        obstacle.PlayCollisionFeedback(other);
+        gameMode.OnGameOver();
     }
 }

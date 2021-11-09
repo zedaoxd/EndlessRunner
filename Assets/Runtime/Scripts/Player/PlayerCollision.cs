@@ -16,20 +16,10 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Obstacle obstacle = other.GetComponent<Obstacle>();
-        if (obstacle != null)
+        ICollisionReact collision = other.GetComponent<ICollisionReact>();
+        if (collision != null)
         {
-            obstacle.PlayCollisionFeedback(other);
-            playerController.Die();
-            animationController.Die();
-            gameMode.OnGameOver();
-        }
-
-        Pickup pickup = other.GetComponent<Pickup>();
-        if (pickup != null)
-        {
-            gameMode.OnCherryPickedUp();
-            pickup.OnPickedUp();
+            collision.ReactCollision(other, gameMode);
         }
     }
 }

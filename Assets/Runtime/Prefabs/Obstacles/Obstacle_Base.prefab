@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   decorationSpawners:
   - {fileID: 9010360676223952342}
+  gameMode: {fileID: 0}
 --- !u!65 &698723583393309539
 BoxCollider:
   m_ObjectHideFlags: 0

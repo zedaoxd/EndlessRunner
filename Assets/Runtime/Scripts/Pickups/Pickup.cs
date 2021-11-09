@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class Pickup : MonoBehaviour
+public class Pickup : MonoBehaviour, ICollisionReact
 {
     [SerializeField] private AudioClip pickupAudio;
 
@@ -14,5 +14,11 @@ public class Pickup : MonoBehaviour
 
         model.SetActive(false);
         Destroy(gameObject, pickupAudio.length);
+    }
+
+    public void ReactCollision(in Collider other,in GameMode gameMode)
+    {
+        gameMode.OnCherryPickedUp();
+        OnPickedUp();
     }
 }
