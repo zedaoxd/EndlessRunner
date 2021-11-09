@@ -16,6 +16,7 @@ MonoBehaviour:
   - {fileID: 5224810188277059943}
   laneDistanceX: 2.2
   initialSpeed: 0.6
+  animator: {fileID: 0}
 --- !u!1001 &3857749129348428977
 PrefabInstance:
   m_ObjectHideFlags: 0
