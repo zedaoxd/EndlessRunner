@@ -18,8 +18,11 @@ public class MainHUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI distanceText;
     [SerializeField] private TextMeshProUGUI countdownText;
-
     [SerializeField] private TextMeshProUGUI cherryCountText;
+    [SerializeField] private TextMeshProUGUI peanutCountText;
+
+    [Header("Image")]
+    [SerializeField] private GameObject imagePowerUp;
 
     private MainHUDAudioController audioController;
 
@@ -34,6 +37,20 @@ public class MainHUD : MonoBehaviour
         scoreText.text = $"Score : {gameMode.Score}";
         distanceText.text = $"{Mathf.RoundToInt(player.TravelledDistance)}m";
         cherryCountText.text = $"{gameMode.CherriesPicked}";
+        peanutCountText.text = $"{gameMode.PeanutPicked}";
+        activeImagePowerUp();
+    }
+
+    private void activeImagePowerUp()
+    {
+        if (!gameMode.IsPowerUpActived)
+        {
+            imagePowerUp.SetActive(false);
+        }
+        else
+        {
+            imagePowerUp.SetActive(true);
+        }
     }
 
     public void StartGame()

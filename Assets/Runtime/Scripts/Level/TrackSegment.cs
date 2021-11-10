@@ -47,7 +47,7 @@ public class TrackSegment : MonoBehaviour
 
             int randomIndex = Random.Range(0, pickupLineSpawners.Length);
             PickupLineSpawner pickupSpawner = pickupLineSpawners[randomIndex];
-            pickupSpawner.SpawnPickupLine(skipPositions);
+            pickupSpawner.SpawnPickups(skipPositions);
         }
     }
 }

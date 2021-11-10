@@ -16,36 +16,29 @@ public class GameMode : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private MainHUD mainHud;
-
     [SerializeField] private MusicPlayer musicPlayer;
 
     [Header("Gameplay")]
+    [SerializeField] private float powerUpSecondsDuration = 30;
     [SerializeField] private float startPlayerSpeed = 10;
     [SerializeField] private float maxPlayerSpeed = 20;
     [SerializeField] private float timeToMaxSpeedSeconds = 5 * 60;
-
     [SerializeField] private float reloadGameDelay = 3;
-
-    [SerializeField]
-    [Range(0, 5)]
-    private int startGameCountdown = 5;
+    [SerializeField] [Range(0, 5)] private int startGameCountdown = 5;
 
     [Header("Score")]
     [SerializeField] private float baseScoreMultiplier = 1;
-    [SerializeField] private float valueCherriesReward = 5;
-
+    [SerializeField] private float valueCherriesReward = 3;
+    [SerializeField] private float valuePeanutReward = 10;
     private float score;
-
     public SaveGameData CurrentSave => gameSaver.CurrentSave;
     public AudioPreferences AudioPreferences => gameSaver.AudioPreferences;
-
     public int Score => Mathf.RoundToInt(score);
-
     public int CherriesPicked { get; private set; }
-
+    public int PeanutPicked { get; private set; }
     private float startGameTime;
-
     private bool isGameRunning = false;
+    public bool IsPowerUpActived { get; private set; } = false;
 
     private void Awake()
     {
@@ -62,6 +55,27 @@ public class GameMode : MonoBehaviour
             float extraScoreMultiplier = 1 + timePercent;
             score += baseScoreMultiplier * extraScoreMultiplier * player.ForwardSpeed * Time.deltaTime;
         }
+    }
+
+    public void timePowerUp()
+    {
+        if (!IsPowerUpActived)
+        {
+            StartCoroutine(timeToActivePowerUp());
+        }
+    }
+
+    private IEnumerator timeToActivePowerUp()
+    {
+        IsPowerUpActived = true;
+        player.ActiveEffectPowerUp(true);
+        baseScoreMultiplier *= 2;
+
+        yield return new WaitForSeconds(powerUpSecondsDuration);
+
+        baseScoreMultiplier = 1;
+        player.ActiveEffectPowerUp(false);
+        IsPowerUpActived = false;
     }
 
     private void SetWaitForStartGameState()
@@ -84,7 +98,8 @@ public class GameMode : MonoBehaviour
         {
             HighestScore = Score > gameSaver.CurrentSave.HighestScore ? Score : gameSaver.CurrentSave.HighestScore,
             LastScore = Score,
-            TotalCherriesCollected = gameSaver.CurrentSave.TotalCherriesCollected + CherriesPicked
+            TotalCherriesCollected = gameSaver.CurrentSave.TotalCherriesCollected + CherriesPicked,
+            TotalPeanutColledted = gameSaver.CurrentSave.TotalPeanutColledted + PeanutPicked,
         });
 
         StartCoroutine(ReloadGameCoroutine());
@@ -109,6 +124,12 @@ public class GameMode : MonoBehaviour
     {
         score += valueCherriesReward;
         CherriesPicked++;
+    }
+
+    public void OnPeanutPickedUp()
+    {
+        score += valuePeanutReward;
+        PeanutPicked++;
     }
 
     public void QuitGame()

@@ -9,6 +9,7 @@ public class StartGameOverlay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highestScoreText;
     [SerializeField] private TextMeshProUGUI lastScoreText;
     [SerializeField] private TextMeshProUGUI totalCherriesText;
+    [SerializeField] private TextMeshProUGUI totalPeanutText;
 
     private void OnEnable()
     {
@@ -20,5 +21,6 @@ public class StartGameOverlay : MonoBehaviour
         highestScoreText.text = $"Highest Score\n{gameMode.CurrentSave.HighestScore}";
         lastScoreText.text = $"Last Score\n{gameMode.CurrentSave.LastScore}";
         totalCherriesText.text = $"{gameMode.CurrentSave.TotalCherriesCollected}";
+        totalPeanutText.text = $"{gameMode.CurrentSave.TotalPeanutColledted}";
     }
 }

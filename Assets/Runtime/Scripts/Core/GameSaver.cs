@@ -8,6 +8,7 @@ public class SaveGameData
     public int LastScore { get; set; }
     public int HighestScore { get; set; }
     public int TotalCherriesCollected { get; set; }
+    public int TotalPeanutColledted { get; set; }
 }
 
 public class AudioPreferences
@@ -93,7 +94,8 @@ public class GameSaver : MonoBehaviour
                 {
                     HighestScore = 0,
                     LastScore = 0,
-                    TotalCherriesCollected = 0
+                    TotalCherriesCollected = 0,
+                    TotalPeanutColledted = 0
                 };
             }
             return save;
