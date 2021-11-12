@@ -4,12 +4,12 @@ using UnityEngine;
 public class PickupLineSpawner : MonoBehaviour
 {
     [Header("Pikups")]
-    [SerializeField] private AbstractPickup pickupPrefab;
+    [SerializeField] private AbstractPickup regularPickupPrefab;
     [SerializeField] private AbstractPickup rarePickupPrefab;
     [Range(0,1)]
     [SerializeField] private float rarePickupChance;
     [Space]
-    [SerializeField] private List<PowerUpMultiplier> powerUpMultipliers;
+    [SerializeField] private List<AbstractPowerUp> powerUps;
     [SerializeField] private float PowerUpChance = 0.1f;
     [Space]
     [SerializeField] private Transform start;
@@ -35,14 +35,8 @@ public class PickupLineSpawner : MonoBehaviour
         {
             if (!ShouldSkipPosition(currentSpawnPosition, skipPositions))
             {
-                if (Random.value <= rarePickupChance)
-                {
-                    AbstractPickup pickup = Instantiate(rarePickupPrefab, currentSpawnPosition, Quaternion.identity, transform);
-                }
-                else
-                {
-                    AbstractPickup pickup = Instantiate(pickupPrefab, currentSpawnPosition, Quaternion.identity, transform);
-                }
+                AbstractPickup pickupPrefab = ChoosePickupPrefab();
+                AbstractPickup pickup = Instantiate(pickupPrefab, currentSpawnPosition, Quaternion.identity, transform);
             }
             currentSpawnPosition.z += spaceBetweenPickups;
         }
@@ -51,15 +45,27 @@ public class PickupLineSpawner : MonoBehaviour
     private void SpawnPowerUp(Vector3[] skipPositions)
     {
         Vector3 currentSpawnPosition = start.position;
-        bool isInstantiate = false;
-        while (!isInstantiate)
+        bool powerUpSpwanded = false;
+        while (currentSpawnPosition.z < end.position.z  && !powerUpSpwanded)
         {
-            if(!ShouldSkipPosition(currentSpawnPosition, skipPositions))
+            if (!ShouldSkipPosition(currentSpawnPosition, skipPositions))
             {
-                AbstractPickup pickup = Instantiate(powerUpMultipliers[0], transform.position, Quaternion.identity, transform);
-                isInstantiate = true;
+                AbstractPowerUp powerUpPrefab = ChoosePowerUpPrefab();
+                Vector3 spawnPosition = start.position;
+                Instantiate(powerUpPrefab, spawnPosition, Quaternion.identity, transform);
+                powerUpSpwanded = true;
             }
-        } 
+        }
+    }
+
+    private AbstractPickup ChoosePickupPrefab()
+    {
+        return Random.value <= rarePickupChance ? rarePickupPrefab : regularPickupPrefab;
+    }
+
+    private AbstractPowerUp ChoosePowerUpPrefab()
+    {
+        return powerUps[Random.Range(0, powerUps.Count)];
     }
 
     private bool ShouldSkipPosition(Vector3 currentSpawnPosition, Vector3[] skipPositions)

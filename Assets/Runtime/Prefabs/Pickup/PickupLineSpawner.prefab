@@ -75,13 +75,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aff334fd97bfd43a86efc06dd3b62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupPrefab: {fileID: 9122744542241322326, guid: 1ab1f5214c99c93499f051036fc9fd90,
+  regularPickupPrefab: {fileID: 3120991689843883427, guid: 1ab1f5214c99c93499f051036fc9fd90,
     type: 3}
   rarePickupPrefab: {fileID: 3308439650607764246, guid: 5175972a641e86246a0e708db2225d42,
     type: 3}
   rarePickupChance: 0.1
-  powerUpMultipliers:
-  - {fileID: -491650660135627223, guid: 10e2488094aa321468d9a8e898ab21ef, type: 3}
+  powerUps:
+  - {fileID: 8594811378634095412, guid: efee0419d8776f648b2bf5cf06d379e0, type: 3}
+  - {fileID: 8108843235781056772, guid: 6d365d50b5990ab4a9dec597772949da, type: 3}
+  - {fileID: 7099948149259829863, guid: 10e2488094aa321468d9a8e898ab21ef, type: 3}
   PowerUpChance: 0.1
   start: {fileID: 1572515561224187458}
   end: {fileID: 150140696781532821}

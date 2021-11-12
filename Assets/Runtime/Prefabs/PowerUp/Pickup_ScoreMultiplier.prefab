@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-491650660135627223
+--- !u!114 &7099948149259829863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2699568188281543212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0371fbe26c5e81d4cb6c857bdf5c8e6f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b20f48846bf453458c9eebf00bdb01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupAudio: {fileID: 8300000, guid: 4777a323670ccc845964e95ce750efc1, type: 3}
+  pickupAudio: {fileID: 8300000, guid: 0e1d959a44eb0934e94bcd45cb6a22ac, type: 3}
   model: {fileID: 6610125892721805673}
+  powerUpTime: 30
+  scoreMultiplier: 2
 --- !u!1001 &1306828669923489796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -245,13 +247,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3443223299383014760, guid: 41d7e373fc6a9564e9ab7510f5ff9345,
+        type: 3}
+      propertyPath: model
+      value: 
+      objectReference: {fileID: 6610125892721805673}
     - target: {fileID: 8213782396315760644, guid: 41d7e373fc6a9564e9ab7510f5ff9345,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_PowerUP
+      value: Pickup_ScoreMultiplier
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -424099307031298659, guid: 41d7e373fc6a9564e9ab7510f5ff9345, type: 3}
+    - {fileID: 3443223299383014760, guid: 41d7e373fc6a9564e9ab7510f5ff9345, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 41d7e373fc6a9564e9ab7510f5ff9345, type: 3}
 --- !u!1 &2699568188281543212 stripped
 GameObject:

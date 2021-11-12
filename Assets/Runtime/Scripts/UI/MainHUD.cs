@@ -38,19 +38,7 @@ public class MainHUD : MonoBehaviour
         distanceText.text = $"{Mathf.RoundToInt(player.TravelledDistance)}m";
         cherryCountText.text = $"{gameMode.CherriesPicked}";
         peanutCountText.text = $"{gameMode.PeanutPicked}";
-        activeImagePowerUp();
-    }
-
-    private void activeImagePowerUp()
-    {
-        if (!gameMode.IsPowerUpActived)
-        {
-            imagePowerUp.SetActive(false);
-        }
-        else
-        {
-            imagePowerUp.SetActive(true);
-        }
+        imagePowerUp.SetActive(gameMode.TemporaryScoreMultipler > 1);
     }
 
     public void StartGame()

@@ -173,6 +173,9 @@ TextureImporter:
   - first:
       213: -4049329702819686777
     second: IconDouble
+  - first:
+      213: 3333253805925593228
+    second: PeanutIcon
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1193,6 +1196,27 @@ TextureImporter:
       bones: []
       spriteID: 7869efce614edc7c0800000000000000
       internalID: -4049329702819686777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PeanutIcon
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 521
+        width: 66
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c80f9681da8124e20800000000000000
+      internalID: 3333253805925593228
       vertices: []
       indices: 
       edges: []

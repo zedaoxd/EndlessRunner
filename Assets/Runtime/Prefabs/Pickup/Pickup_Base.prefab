@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2806588584754477002}
-  - component: {fileID: -424099307031298659}
   - component: {fileID: 5754689434153635309}
   - component: {fileID: 1204221718232385043}
+  - component: {fileID: 3443223299383014760}
   m_Layer: 0
   m_Name: Pickup_Base
   m_TagString: Untagged
@@ -33,20 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-424099307031298659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8213782396315760644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44be7348bb6c57a439e942417dcd0688, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickupAudio: {fileID: 8300000, guid: 0e1d959a44eb0934e94bcd45cb6a22ac, type: 3}
-  model: {fileID: 0}
 --- !u!65 &5754689434153635309
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69,7 +55,8 @@ AudioSource:
   m_GameObject: {fileID: 8213782396315760644}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -1450324270061248655, guid: c07e61c505e4dfe4b96c2d76721cda45, type: 2}
+  OutputAudioMixerGroup: {fileID: -1450324270061248655, guid: c07e61c505e4dfe4b96c2d76721cda45,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -156,3 +143,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3443223299383014760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8213782396315760644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44be7348bb6c57a439e942417dcd0688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupAudio: {fileID: 8300000, guid: 0e1d959a44eb0934e94bcd45cb6a22ac, type: 3}
+  model: {fileID: 0}

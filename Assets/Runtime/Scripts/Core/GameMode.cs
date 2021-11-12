@@ -19,7 +19,6 @@ public class GameMode : MonoBehaviour
     [SerializeField] private MusicPlayer musicPlayer;
 
     [Header("Gameplay")]
-    [SerializeField] private float powerUpSecondsDuration = 30;
     [SerializeField] private float startPlayerSpeed = 10;
     [SerializeField] private float maxPlayerSpeed = 20;
     [SerializeField] private float timeToMaxSpeedSeconds = 5 * 60;
@@ -36,9 +35,15 @@ public class GameMode : MonoBehaviour
     public int Score => Mathf.RoundToInt(score);
     public int CherriesPicked { get; private set; }
     public int PeanutPicked { get; private set; }
+    private int temporaryScoreMultipler = 1;
+    public int TemporaryScoreMultipler
+    {
+        get => temporaryScoreMultipler;
+        set => temporaryScoreMultipler = Mathf.Max(1, value);
+    }
+    public bool IsInvencible { get; set; } = false;
     private float startGameTime;
     private bool isGameRunning = false;
-    public bool IsPowerUpActived { get; private set; } = false;
 
     private void Awake()
     {
@@ -53,30 +58,10 @@ public class GameMode : MonoBehaviour
             float timePercent = (Time.time - startGameTime) / timeToMaxSpeedSeconds;
             player.ForwardSpeed = Mathf.Lerp(startPlayerSpeed, maxPlayerSpeed, timePercent);
             float extraScoreMultiplier = 1 + timePercent;
-            score += baseScoreMultiplier * extraScoreMultiplier * player.ForwardSpeed * Time.deltaTime;
+            score += baseScoreMultiplier * extraScoreMultiplier * player.ForwardSpeed * Time.deltaTime * temporaryScoreMultipler;
         }
     }
 
-    public void timePowerUp()
-    {
-        if (!IsPowerUpActived)
-        {
-            StartCoroutine(timeToActivePowerUp());
-        }
-    }
-
-    private IEnumerator timeToActivePowerUp()
-    {
-        IsPowerUpActived = true;
-        player.ActiveEffectPowerUp(true);
-        baseScoreMultiplier *= 2;
-
-        yield return new WaitForSeconds(powerUpSecondsDuration);
-
-        baseScoreMultiplier = 1;
-        player.ActiveEffectPowerUp(false);
-        IsPowerUpActived = false;
-    }
 
     private void SetWaitForStartGameState()
     {

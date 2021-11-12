@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class Pickup : AbstractPickup
 {
-    public override void ReactCollision(in Collider other,in GameMode gameMode)
+    protected override void ExecutePickupBehaviour(in PlayerCollisionInfo collisionInfo)
     {
-        gameMode.OnCherryPickedUp();
-        OnPickedUp();
+        collisionInfo.GameMode.OnCherryPickedUp();
     }
 }

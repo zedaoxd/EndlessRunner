@@ -19,10 +19,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider regularCollider;
     [SerializeField] private Collider rollCollider;
 
-    [Header("Effect PowerUp")]
-    [SerializeField] private GameObject effectPowerUp;
-
-
     Vector3 initialPosition;
 
     float targetPositionX;
@@ -51,7 +47,6 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        effectPowerUp.SetActive(false);
         initialPosition = transform.position;
         StopRoll();
     }
@@ -71,11 +66,6 @@ public class PlayerController : MonoBehaviour
         ProcessRoll();
 
         transform.position = position;
-    }
-
-    public void ActiveEffectPowerUp(bool state)
-    {
-        effectPowerUp.SetActive(state);
     }
 
     private void ProcessInput()

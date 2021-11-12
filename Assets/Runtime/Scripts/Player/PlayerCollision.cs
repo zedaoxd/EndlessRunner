@@ -19,7 +19,13 @@ public class PlayerCollision : MonoBehaviour
         ICollisionReact collision = other.GetComponent<ICollisionReact>();
         if (collision != null)
         {
-            collision.ReactCollision(other, gameMode);
+            collision.ReactCollision(new PlayerCollisionInfo()
+            {
+                Player = playerController,
+                PlayerAnimation = animationController,
+                GameMode = gameMode,
+                MyCollider = other
+            });
         }
     }
 }

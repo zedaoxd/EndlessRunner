@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class PickupPeanut : AbstractPickup
 {
-    public override void ReactCollision(in Collider other, in GameMode gameMode)
+    protected override void ExecutePickupBehaviour(in PlayerCollisionInfo collisionInfo)
     {
-        gameMode.OnPeanutPickedUp();
-        OnPickedUp();
+        collisionInfo.GameMode.OnPeanutPickedUp();
     }
 }
