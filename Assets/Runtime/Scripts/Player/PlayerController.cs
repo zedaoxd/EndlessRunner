@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -18,32 +19,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rollDistanceZ = 5;
     [SerializeField] private Collider regularCollider;
     [SerializeField] private Collider rollCollider;
-
     Vector3 initialPosition;
-
     float targetPositionX;
-
     public float ForwardSpeed { get; set; } = 10;
-
     public bool IsJumping { get; private set; }
-
     private float rollStartZ;
     public bool IsRolling { get; private set; }
-
     public float JumpDuration => jumpDistanceZ / ForwardSpeed;
-
     public float RollDuration => rollDistanceZ / ForwardSpeed;
     float jumpStartZ;
-
     private float LeftLaneX => initialPosition.x - laneDistanceX;
     private float RightLaneX => initialPosition.x + laneDistanceX;
-
     private bool CanJump => !IsJumping;
     private bool CanRoll => !IsRolling;
-
     public float TravelledDistance => transform.position.z - initialPosition.z;
-
     private bool isDead = false;
+    public event Action PlayerDeathEvent;
 
     void Awake()
     {
@@ -164,7 +155,7 @@ public class PlayerController : MonoBehaviour
         rollCollider.enabled = false;
     }
 
-    public void Die()
+    private void Die()
     {
         ForwardSpeed = 0;
         targetPositionX = transform.position.x;
@@ -173,5 +164,20 @@ public class PlayerController : MonoBehaviour
         StopJump();
         regularCollider.enabled = false;
         rollCollider.enabled = false;
+    }
+
+    private bool IsPlayerInvencible()
+    {
+        PowerUpBehaviour_Invencible invencible = GetComponentInChildren<PowerUpBehaviour_Invencible>();
+        return invencible != null && invencible.IsPowerUpActivate;
+    }
+
+    public void OnCollidedWithObstacle()
+    {
+        if (!IsPlayerInvencible())
+        {
+            Die();
+            PlayerDeathEvent?.Invoke();
+        }
     }
 }

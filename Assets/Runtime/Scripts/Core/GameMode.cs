@@ -62,6 +62,20 @@ public class GameMode : MonoBehaviour
         }
     }
 
+    private void OnEnable() 
+    {
+        player.PlayerDeathEvent += OnPlayerDeath;
+    }
+
+    private void OnDestroy() 
+    {
+        player.PlayerDeathEvent -= OnPlayerDeath;
+    }
+
+    private void OnPlayerDeath()
+    {
+        GameOver();
+    }
 
     private void SetWaitForStartGameState()
     {
@@ -71,11 +85,8 @@ public class GameMode : MonoBehaviour
         musicPlayer.PlayStartMenuMusic();
     }
 
-    public void OnGameOver()
+    private void GameOver()
     {
-        player.Die();
-        playerAnimationController.Die();
-
         isGameRunning = false;
         player.ForwardSpeed = 0;
 

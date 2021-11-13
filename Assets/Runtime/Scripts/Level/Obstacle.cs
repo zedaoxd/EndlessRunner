@@ -45,21 +45,10 @@ public class Obstacle : MonoBehaviour, ICollisionReact
         return minDistDecoration;
     }
 
-    private static bool IsPlayerInvencible(PlayerController player)
-    {
-        PowerUpBehaviour_Invencible invencible = player.GetComponentInChildren<PowerUpBehaviour_Invencible>();
-        return invencible != null && invencible.IsPowerUpActivate;
-    }
-
     public void ReactCollision(in PlayerCollisionInfo collisionInfo)
     {
         Die(collisionInfo.MyCollider);
-        if (!IsPlayerInvencible(collisionInfo.Player))
-        {
-            collisionInfo.Player.Die();
-            collisionInfo.GameMode.OnGameOver();
-            collisionInfo.PlayerAnimation.Die();
-        } 
+        collisionInfo.Player.OnCollidedWithObstacle();
     }
 
     public virtual void Die(Collider collider)

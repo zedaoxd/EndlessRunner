@@ -13,13 +13,23 @@ public class PlayerAnimationController : MonoBehaviour
         player = GetComponent<PlayerController>();
     }
 
+    private void OnEnable() 
+    {
+        player.PlayerDeathEvent += OnPlayerDeath;
+    }
+
+    private void OnDestroy() 
+    {
+        player.PlayerDeathEvent -= OnPlayerDeath;
+    }
+
     private void Update()
     {
         animator.SetBool(PlayerAnimationConstants.IsJumping, player.IsJumping);
         animator.SetBool(PlayerAnimationConstants.IsRolling, player.IsRolling);
     }
 
-    public void Die()
+    private void OnPlayerDeath()
     {
         animator.SetTrigger(PlayerAnimationConstants.DieTrigger);
     }
