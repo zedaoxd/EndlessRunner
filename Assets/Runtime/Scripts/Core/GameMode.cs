@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -81,7 +82,7 @@ public class GameMode : MonoBehaviour
     {
         player.enabled = false;
         isGameRunning = false;
-        mainHud.ShowStartGameOverlay();
+        mainHud.ShowOverlay<UIOverlay_weitStartGame>();
         musicPlayer.PlayStartMenuMusic();
     }
 

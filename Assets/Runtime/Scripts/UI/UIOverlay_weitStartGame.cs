@@ -1,9 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class StartGameOverlay : MonoBehaviour
+public class UIOverlay_weitStartGame : UIOverlay
 {
     [SerializeField] private GameMode gameMode;
+    [SerializeField] private MainHUD mainHUD;
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI highestScoreText;
@@ -22,5 +25,10 @@ public class StartGameOverlay : MonoBehaviour
         lastScoreText.text = $"Last Score\n{gameMode.CurrentSave.LastScore}";
         totalCherriesText.text = $"{gameMode.CurrentSave.TotalCherriesCollected}";
         totalPeanutText.text = $"{gameMode.CurrentSave.TotalPeanutColledted}";
+    }
+
+    public void SettingsWindow()
+    {
+        mainHUD.ShowOverlay<UIOverlay_Settings>();
     }
 }

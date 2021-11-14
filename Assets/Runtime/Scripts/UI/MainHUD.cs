@@ -9,10 +9,8 @@ public class MainHUD : MonoBehaviour
     [SerializeField] private GameMode gameMode;
 
     [Header("Overlays")]
-    [SerializeField] private GameObject startGameOverlay;
-    [SerializeField] private GameObject hudOverlay;
-    [SerializeField] private GameObject pauseOverlay;
-    [SerializeField] private GameObject settingsOverlay;
+    [SerializeField] private UIOverlay[] overlays;
+    private UIOverlay previousOverlay;
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -28,7 +26,6 @@ public class MainHUD : MonoBehaviour
 
     private void Awake()
     {
-        ShowHudOverlay();
         audioController = GetComponent<MainHUDAudioController>();
     }
 
@@ -48,51 +45,35 @@ public class MainHUD : MonoBehaviour
 
     public void PauseGame()
     {
-        ShowPauseOverlay();
+        ShowOverlay<UIOverlay_Pause>();
         gameMode.PauseGame();
     }
 
     public void ResumeGame()
     {
         gameMode.ResumeGame();
-        ShowHudOverlay();
+        ShowOverlay<UIOverlay_InGame>();
     }
 
-    public void ShowStartGameOverlay()
+    public void ShowOverlay<T>() where T : UIOverlay
     {
-        startGameOverlay.SetActive(true);
-        pauseOverlay.SetActive(false);
-        hudOverlay.SetActive(false);
-        settingsOverlay.SetActive(false);
-    }
-
-    public void ShowHudOverlay()
-    {
-        startGameOverlay.SetActive(false);
-        pauseOverlay.SetActive(false);
-        hudOverlay.SetActive(true);
-        settingsOverlay.SetActive(false);
-    }
-
-    public void ShowPauseOverlay()
-    {
-        startGameOverlay.SetActive(false);
-        pauseOverlay.SetActive(true);
-        hudOverlay.SetActive(false);
-        settingsOverlay.SetActive(false);
-    }
-
-    public void ShowSettingsOverlay()
-    {
-        startGameOverlay.SetActive(false);
-        pauseOverlay.SetActive(false);
-        hudOverlay.SetActive(false);
-        settingsOverlay.SetActive(true);
+        foreach (UIOverlay overlay in overlays)
+        {
+            if (overlay is T)
+            {
+                if (previousOverlay != null)
+                {
+                    previousOverlay.gameObject.SetActive(false);
+                }
+                overlay.gameObject.SetActive(true);
+                previousOverlay = overlay;
+            }
+        }
     }
 
     public IEnumerator PlayStartGameCountdown(int countdownSeconds)
     {
-        ShowHudOverlay();
+        ShowOverlay<UIOverlay_InGame>();
         countdownText.gameObject.SetActive(false);
 
         if (countdownSeconds == 0)
