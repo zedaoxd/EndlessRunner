@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -36,13 +37,13 @@ public class PlayerController : MonoBehaviour
     private bool isDead = false;
     public event Action PlayerDeathEvent;
 
-    void Awake()
+    private void Awake()
     {
         initialPosition = transform.position;
         StopRoll();
     }
 
-    void Update()
+    private void Update()
     {
         if (!isDead)
         {
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour
         {
             StartRoll();
         }
-
+        
         targetPositionX = Mathf.Clamp(targetPositionX, LeftLaneX, RightLaneX);
     }
 

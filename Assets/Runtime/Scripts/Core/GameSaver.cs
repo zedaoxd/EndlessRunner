@@ -5,17 +5,17 @@ using Newtonsoft.Json;
 
 public class SaveGameData
 {
-    public int LastScore { get; set; }
-    public int HighestScore { get; set; }
-    public int TotalCherriesCollected { get; set; }
-    public int TotalPeanutColledted { get; set; }
+    public int LastScore { get; set; } = 0;
+    public int HighestScore { get; set; } = 0;
+    public int TotalCherriesCollected { get; set; } = 0;
+    public int TotalPeanutColledted { get; set; } = 0;
 }
 
 public class AudioPreferences
 {
-    public float MainVolume { get; set; }
-    public float MusicVolume { get; set; }
-    public float SFXVolume { get; set; }
+    public float MainVolume { get; set; } = 1;
+    public float MusicVolume { get; set; } = 1;
+    public float SFXVolume { get; set; } = 1;
 }
 
 public class GameSaver : MonoBehaviour
@@ -29,7 +29,7 @@ public class GameSaver : MonoBehaviour
     public void SaveGame(SaveGameData saveData)
     {
         CurrentSave = saveData;
-        SerializeSave(CurrentSave, PathSaveGame);
+        Serialize<SaveGameData>(CurrentSave, PathSaveGame);
     }
 
     public void LoadGame()
@@ -38,14 +38,14 @@ public class GameSaver : MonoBehaviour
         {
             return;
         }
-        CurrentSave = DeserializeSave(PathSaveGame);
-        AudioPreferences = DeserializeAudio(pathSaveAudioPrefs);
+        CurrentSave = Deserialize<SaveGameData>(PathSaveGame);
+        AudioPreferences = Deserialize<AudioPreferences>(pathSaveAudioPrefs);
     }
 
     public void SaveAudioPreferences(AudioPreferences preferences)
     {
         AudioPreferences = preferences;
-        SerializeAudio(AudioPreferences, pathSaveAudioPrefs);
+        Serialize<AudioPreferences>(AudioPreferences, pathSaveAudioPrefs);
     }
 
     public void DeleteAllData()
@@ -57,68 +57,30 @@ public class GameSaver : MonoBehaviour
         LoadGame();
     }
 
-    
-    private void SerializeSave(SaveGameData saveData, string path)
+    private void Serialize<T>(T save, string path)
     {
-        using(var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
+        using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
         using (var sw = new StreamWriter(stream))
         using (JsonWriter writer = new JsonTextWriter(sw))
         {
             var serializer = new JsonSerializer();
-            serializer.Serialize(writer, saveData);
+            serializer.Serialize(writer, save);
         }
     }
 
-    private void SerializeAudio(AudioPreferences preferences, string path)
+    private T Deserialize<T>(string path) where T : new()
     {
-        using(var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
-        using (var sw = new StreamWriter(stream))
-        using (JsonWriter writer = new JsonTextWriter(sw))
-        {
-            var serializer = new JsonSerializer();
-            serializer.Serialize(writer, preferences);
-        }
-    }
-
-    public SaveGameData DeserializeSave(string path)
-    {
-        using(var stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
+        using (var stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
         using (var sw = new StreamReader(stream))
         using (var reader = new JsonTextReader(sw))
         {
-            var serializer = new JsonSerializer();  
-            SaveGameData save = serializer.Deserialize<SaveGameData>(reader);
+            var serializer = new JsonSerializer();
+            T save = serializer.Deserialize<T>(reader);
             if (save == null)
             {
-                save = new SaveGameData()
-                {
-                    HighestScore = 0,
-                    LastScore = 0,
-                    TotalCherriesCollected = 0,
-                    TotalPeanutColledted = 0
-                };
+                save = new T();
             }
             return save;
         }
     }
-
-    public AudioPreferences DeserializeAudio(string path)
-    {
-        using(var stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
-        using (var sw = new StreamReader(stream))
-        using (var reader = new JsonTextReader(sw))
-        {
-            var serializer = new JsonSerializer();
-            AudioPreferences preferences = serializer.Deserialize<AudioPreferences>(reader);
-            if (preferences == null)
-            {
-                preferences = new AudioPreferences();
-                preferences.MainVolume = 1;
-                preferences.MusicVolume = 1;
-                preferences.SFXVolume = 1;
-            }
-            return preferences;
-        }
-    }
-    
 }
